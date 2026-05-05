@@ -20,7 +20,7 @@ class GoogleAuthController extends Controller
     public function callback()
     {
         // 1. Obtenemos los datos encriptados que nos manda Google
-        $googleUser = Socialite::driver('google')->user();
+        $googleUser = Socialite::driver('google')->stateless()->user();
 
         // 2. Buscamos si ya existe el correo. Si no, lo crea (UpdateOrCreate)
         $user = User::updateOrCreate([

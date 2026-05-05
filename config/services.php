@@ -38,9 +38,9 @@ return [
     'token' => env('POSTMARK_TOKEN'),
 ],
     'google' => [
-        'client_id' => '572419917917-qubibvjepb7l7tfo25rd57chds6d2a1u.apps.googleusercontent.com',
-        'client_secret' => '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',
-        'redirect' => 'http://100.109.37.41.nip.io:8000/auth/google/callback',
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 
 ];

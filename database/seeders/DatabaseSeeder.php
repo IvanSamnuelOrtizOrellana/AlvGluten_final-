@@ -8,15 +8,25 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // 1. Fabricamos 5 categorías y las guardamos en una variable
+        $categories = \App\Models\Category::factory(5)->create();
 
+        // 2. Recorremos cada categoría que se acaba de crear...
+        foreach ($categories as $category) {
+
+            // 3. Y por cada una, le fabricamos 10 productos amarrados a su ID
+            \App\Models\Product::factory(10)->create([
+                'category_id' => $category->id
+            ]);
+
+        } // <--- ¡ESTA ES LA LLAVE QUE TE FALTABA MANITO!
+
+        // Creamos tu usuario de prueba
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',

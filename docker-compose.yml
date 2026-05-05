@@ -1,0 +1,26 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8081:8000"
+    environment:
+      - DB_HOST=db
+      - DB_DATABASE=alvgluten
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=alvgluten
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
