@@ -9,12 +9,20 @@ use App\Models\Product;
 Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 Route::get('/dashboard', function () {
-    return "¡Login exitoso! Bienvenido al sistema de AlvGluten, " . auth()->user()->name;
-});
+    return view('/dashboard');
+})->middleware('auth')->name('dashboard'); //1. Así protegemnos la ruta dashboard con el Middleware 'auth'
+Route::get('/logout', function(){  //2. Para destruir la sesion de forma segura,
+    auth()->logout();
+    // Esto limpia la memoria de la sesion
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/');
+})->name('logout');
+
+
 Route::get('/', function () {
-    // 1. Le pedimos al Modelo que traiga TODOS los productos, e incluya su categoría
     $products = Product::with('category')->get();
 
-    // 2. Retornamos la vista 'welcome' y le "inyectamos" la variable $products usando compact()
+
     return view('welcome', compact('products'));
 });
