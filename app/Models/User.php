@@ -29,13 +29,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    // 1. Definimos las constantes para no equivocarnos nunca al escribir
+    //  Definimos las constantes para no equivocarnos nunca al escribir
     const ROLE_ADMIN = 'admin';
     const ROLE_USER = 'usuario';
 
-    // 2. Creamos una pregunta auxiliar inteligente
+    // Creamos una pregunta auxiliar inteligente
     public function isAdmin()
     {
         return $this->rol === self::ROLE_ADMIN;
+    }
+
+    public function cartProducts()
+    {
+        // el belongstomany nos ayuda a relacion de muchos a muchos
+        return $this->belongsToMany(Product::class, 'product_user')
+            ->withTimestamps();
     }
 }

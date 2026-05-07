@@ -27,7 +27,9 @@ new class extends Component
                     <div class="mt-auto flex justify-between items-center">
                         <p class="text-2xl font-black text-green-600">${{ $product->price }}</p>
                         <!-- Este botón todavía no hace nada, lo conectaremos al Carrito después -->
-                        <button class="bg-gray-900 hover:bg-gray-800 text-white font-bold p-2 rounded-full transition">
+                        <button wire:click="addToCart({{ $product->id }})" class="bg-black text-white w-8 h-8 rounded-full font-bold hover:bg-gray-800 transition">
+                            +
+                        </button>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                             </svg>

@@ -14,4 +14,11 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function users()
+    {
+        // indica que tiene una relacion de muchos a muchos con products
+        return $this->belogsTomany(User::class, 'product_user')
+            ->withTimestamps();
+    }
 }
