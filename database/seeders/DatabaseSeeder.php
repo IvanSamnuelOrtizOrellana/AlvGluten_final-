@@ -13,10 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Fabricamos 5 categorías y las guardamos en una variable
+        // Fabrica 5 categorías y las guardamos en una variable
         $categories = \App\Models\Category::factory(5)->create();
 
-        // 2. Recorremos cada categoría que se acaba de crear...
+        // Recorremos cada categoría que se acaba de crear
         foreach ($categories as $category) {
 
             // 3. Y por cada una, le fabricamos 10 productos amarrados a su ID
