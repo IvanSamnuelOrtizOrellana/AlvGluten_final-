@@ -69,37 +69,56 @@ new #[Layout('layouts.guest')] class extends Component
     }
 }; ?>
 
-<div>
-    <form wire:submit="resetPassword">
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+<div class="w-full max-w-md">
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+
+        <div class="text-center mb-6">
+            <span class="text-5xl">🔑</span>
+            <h1 class="text-2xl font-extrabold text-gray-800 mt-3">Nueva contraseña</h1>
+            <p class="text-gray-500 text-sm mt-2">Elige una contraseña segura para tu cuenta</p>
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input wire:model="password" id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+        <form wire:submit="resetPassword" class="space-y-5">
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <div>
+                <x-input-label for="email" value="Correo electrónico" class="font-semibold text-gray-700"/>
+                <div class="relative mt-1">
+                    <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 pointer-events-none">✉️</span>
+                    <x-text-input wire:model="email" id="email" type="email" name="email"
+                                  class="block w-full pl-10 rounded-xl border-gray-200 bg-gray-50"
+                                  readonly/>
+                </div>
+                <x-input-error :messages="$errors->get('email')" class="mt-1"/>
+            </div>
 
-            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
-                          type="password"
-                          name="password_confirmation" required autocomplete="new-password" />
+            <div>
+                <x-input-label for="password" value="Nueva contraseña" class="font-semibold text-gray-700"/>
+                <div class="relative mt-1">
+                    <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 pointer-events-none">🔒</span>
+                    <x-text-input wire:model="password" id="password" type="password" name="password"
+                                  class="block w-full pl-10 rounded-xl border-gray-200 focus:border-lime-400 focus:ring-lime-400"
+                                  placeholder="Mínimo 8 caracteres" required autocomplete="new-password"/>
+                </div>
+                <x-input-error :messages="$errors->get('password')" class="mt-1"/>
+            </div>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
+            <div>
+                <x-input-label for="password_confirmation" value="Confirmar contraseña" class="font-semibold text-gray-700"/>
+                <div class="relative mt-1">
+                    <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 pointer-events-none">🔐</span>
+                    <x-text-input wire:model="password_confirmation" id="password_confirmation"
+                                  type="password" name="password_confirmation"
+                                  class="block w-full pl-10 rounded-xl border-gray-200 focus:border-lime-400 focus:ring-lime-400"
+                                  placeholder="Repite tu nueva contraseña" required autocomplete="new-password"/>
+                </div>
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1"/>
+            </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
+            <button type="submit"
+                    class="w-full bg-lime-600 hover:bg-lime-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md active:scale-95">
+                <span wire:loading.remove>Guardar nueva contraseña 🔐</span>
+                <span wire:loading>Guardando...</span>
+            </button>
+        </form>
+    </div>
 </div>

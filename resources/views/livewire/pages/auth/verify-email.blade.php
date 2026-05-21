@@ -35,24 +35,37 @@ new #[Layout('layouts.guest')] class extends Component
     }
 }; ?>
 
-<div>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
-    </div>
+<div class="w-full max-w-md">
+    <div class="bg-white rounded-2xl shadow-xl p-8 text-center">
 
-    @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600">
-            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+        <span class="text-6xl">📧</span>
+        <h1 class="text-2xl font-extrabold text-gray-800 mt-4">Verifica tu correo</h1>
+        <p class="text-gray-500 text-sm mt-3 leading-relaxed">
+            Te enviamos un link de verificación a tu correo. Ábrelo para activar tu cuenta
+            y empezar a comprar sin gluten. 🌾
+        </p>
+
+        @if (session('status') == 'verification-link-sent')
+            <div class="mt-4 bg-lime-50 border border-lime-200 text-lime-700 text-sm rounded-xl p-3">
+                ✅ ¡Listo! Te reenviamos el correo de verificación.
+            </div>
+        @endif
+
+        <div class="mt-6 flex flex-col gap-3">
+            <form wire:submit="sendVerification">
+                <button type="submit"
+                        class="w-full bg-lime-600 hover:bg-lime-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md active:scale-95">
+                    <span wire:loading.remove>Reenviar correo de verificación</span>
+                    <span wire:loading>Enviando...</span>
+                </button>
+            </form>
+
+            <form wire:submit="logout">
+                <button type="submit"
+                        class="w-full border-2 border-gray-200 hover:border-red-300 hover:bg-red-50 text-gray-600 hover:text-red-600 font-semibold py-2.5 px-4 rounded-xl transition-all text-sm">
+                    Cerrar sesión
+                </button>
+            </form>
         </div>
-    @endif
-
-    <div class="mt-4 flex items-center justify-between">
-        <x-primary-button wire:click="sendVerification">
-            {{ __('Resend Verification Email') }}
-        </x-primary-button>
-
-        <button wire:click="logout" type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            {{ __('Log Out') }}
-        </button>
     </div>
 </div>

@@ -32,7 +32,7 @@
                         <button type="button" data-drawer-target="drawer-cart" data-drawer-show="drawer-cart" data-drawer-placement="right" class="relative text-gray-700 hover:text-lime-600 transition-colors focus:outline-none">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             <span id="cart-counter" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full border-2 border-white">
-                                 {{ auth()->user()->cartProducts->count() }}
+                                 {{ auth()->user()->cartProducts()->sum('product_user.quantity') }}
                             </span>
                         </button>
 
@@ -46,9 +46,16 @@
                                 <li><a href="{{ route('dashboard') }}" class="block px-4 py-2 hover:bg-lime-50 hover:text-lime-600 font-medium">Mi Panel</a></li>
                             </ul>
                             <div class="py-2">
-                                <form method="POST" action="{{ route('logout') }}" class="m-0">
+                                <button
+                                        wire:click="$dispatch('logout-requested')"
+                                        onclick="document.getElementById('logout-form').submit()"
+                                        class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-medium">
+                                    Cerrar Sesión
+                                </button>
+
+
+                                <form id="logout-form" method="POST" action="{{ route('logout') }}" class="hidden">
                                     @csrf
-                                    <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-medium">Cerrar Sesión</button>
                                 </form>
                             </div>
                         </div>
@@ -114,28 +121,9 @@
             </div>
 
             <div class="py-4 flex flex-col h-[calc(100vh-120px)]">
-                <div class="flex-grow overflow-y-auto pr-2 space-y-4">
 
-                    @if(auth()->user()->cartProducts->isEmpty())
-                        <div class="flex flex-col items-center justify-center text-center h-full opacity-60">
-                            <span class="text-6xl mb-4">🛍️</span>
-                            <p class="text-gray-500 font-medium">Tu carrito está muy vacío.</p>
-                            <p class="text-sm text-gray-400 mt-1">¡Agrega unos snacks deliciosos!</p>
-                        </div>
-                    @else
-                        @foreach(auth()->user()->cartProducts as $item)
-                            <div class="flex items-center gap-4 bg-gray-50 p-3 rounded-xl border border-gray-100">
-                                <div class="h-12 w-12 bg-lime-100 rounded-lg flex items-center justify-center text-xl">🥖</div>
-                                <div class="flex-grow">
-                                    <h6 class="text-sm font-bold text-gray-900 truncate w-32">{{ $item->name }}</h6>
-                                    <p class="text-xs text-gray-500">{{ $item->category->name ?? 'Producto' }}</p>
-                                </div>
-                                <span class="font-black text-lime-600">${{ $item->price }}</span>
-                            </div>
-                        @endforeach
-                    @endif
-
-                </div>
+                <livewire:cart-drawer />
+            </div>
 
                 <div class="mt-auto pt-4 border-t border-gray-200">
                     <div class="flex justify-between mb-4">
@@ -156,6 +144,14 @@
 
 <script>
     document.addEventListener('livewire:initialized', () => {
+
+        Livewire.hook('request', ({ options }) => {
+            options.headers['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        });
+
+        // ... resto de tus listeners
+    });
+    document.addEventListener('livewire:initialized', () => {
         const $modalEl = document.getElementById('login-modal');
         let loginModal = null;
 
@@ -164,7 +160,7 @@
             loginModal = new Modal($modalEl, { backdrop: 'dynamic' });
         }
 
-        // Bug 1 fix: abre el modal desde evento Livewire
+
         Livewire.on('abrir-modal-login', () => {
             loginModal?.show();
         });
@@ -175,13 +171,14 @@
         });
 
         // Bug 2 fix: actualiza el contador del carrito
-        Livewire.on('cart-updated', () => {
-            const counter = document.getElementById('cart-counter');
-            if (counter) {
-                counter.innerText = parseInt(counter.innerText.trim()) + 1;
-                counter.classList.add('animate-bounce', 'bg-lime-500');
-                setTimeout(() => counter.classList.remove('animate-bounce', 'bg-lime-500'), 1000);
-            }
+        Livewire.on('cart-counter-sync', () => {
+            // Re-fetch el conteo real desde el servidor
+            fetch('/cart/count')
+                .then(r => r.json())
+                .then(data => {
+                    const counter = document.getElementById('cart-counter');
+                    if (counter) counter.innerText = data.count;
+                });
         });
     });
 </script>

@@ -8,14 +8,8 @@ use Livewire\Attributes\Layout;
 #[Layout('components.layouts.app')]
 class Catalog extends Component
 {
-    public function render()
-    {
-        // Traemos todos los productos con su categoría
-        $products = Product::with('category')->get();
-
-        return view('livewire.catalog', compact('products'));
-    }
-    public function addToCart($productId)
+    
+    /*public function addToCart($productId)
     {
     if (!auth()->check())
     {
@@ -38,6 +32,35 @@ class Catalog extends Component
             // para que no estar recargando para ver que se actualize el carrrito
             $this->dispatch('cart-updated');
         }
+    }*/
+    public function addToCart(int $productId): void
+    {
+        if (!auth()->check()) {
+            $this->dispatch('abrir-modal-login');
+            return;
+        }
+
+        $user = auth()->user();
+        $existing = $user->cartProducts()->where('product_id', $productId)->first();
+
+        if ($existing) {
+            // Producto ya en carrito → incrementa la cantidad en la pivote
+            $user->cartProducts()->updateExistingPivot($productId, [
+                'quantity' => $existing->pivot->quantity + 1,
+            ]);
+        } else {
+            // Producto nuevo → lo agrega con quantity = 1 (default)
+            $user->cartProducts()->attach($productId);
+        }
+
+        $this->dispatch('cart-updated');
+    }
+
+    public function render()
+    {
+        return view('livewire.catalog', [
+            'products' => Product::with('category')->get(),
+        ]);
     }
 
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\GoogleAuthController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
+
 // Tu Catálogo Perrón como página principal
 Route::get('/', Catalog::class)->name('home');
 
@@ -24,6 +25,13 @@ Route::post('/logout', function(Request $request){
     $request->session()->regenerateToken();
     return redirect('/');
 })->name('logout');
+Route::get('/cart/count', function () {
+    return response()->json([
+        'count' => auth()->check()
+            ? auth()->user()->cartProducts()->sum('product_user.quantity')
+            : 0
+    ]);
+})->middleware('auth');
 
 
 require __DIR__.'/auth.php';

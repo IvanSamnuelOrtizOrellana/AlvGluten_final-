@@ -3,31 +3,36 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>AlvGluten | Acceso</title>
-    <link rel="icon" type="image/png" href="{{ asset('images/logo_alvgluten.png') }}">
-
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,800&display=swap" rel="stylesheet" />
-
+    <title>{{ config('app.name', 'AlvGluten') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
-<body class="font-sans text-gray-900 antialiased bg-gray-50">
+<body class="min-h-screen bg-gradient-to-br from-lime-50 via-green-50 to-emerald-100 font-sans antialiased">
 
-<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-
-    <div class="mb-6 text-center">
-        <a href="/" wire:navigate class="flex flex-col items-center gap-2 group">
-            <img src="{{ asset('images/logo_alvgluten.png') }}" alt="Logo AlvGluten" class="h-24 w-auto transition-transform group-hover:scale-105">
-            
-        </a>
-    </div>
-
-    <div class="w-full sm:max-w-md mt-2 px-6">
-        {{ $slot }}
-    </div>
-
+{{-- Decoración de fondo --}}
+<div class="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-lime-200 rounded-full opacity-20 blur-3xl"></div>
+    <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-green-300 rounded-full opacity-20 blur-3xl"></div>
 </div>
+
+<div class="relative min-h-screen flex flex-col items-center justify-center p-4">
+
+    {{-- Logo siempre visible arriba --}}
+    <a href="{{ route('home') }}" class="mb-6 block">
+        <img src="{{ asset('images/logo_alvgluten.png') }}"
+             alt="AlvGluten"
+             class="h-16 object-contain mx-auto hover:scale-105 transition-transform">
+    </a>
+
+    {{-- Contenido de la página --}}
+    {{ $slot }}
+
+    {{-- Footer mínimo --}}
+    <p class="mt-8 text-xs text-gray-400 text-center">
+        © {{ date('Y') }} AlvGluten · Celíacos No Millonarios 🌾
+    </p>
+</div>
+
+@livewireScripts
 </body>
 </html>

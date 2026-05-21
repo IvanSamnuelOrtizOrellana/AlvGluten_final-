@@ -43,6 +43,7 @@ class User extends Authenticatable
     {
         // el belongstomany nos ayuda a relacion de muchos a muchos
         return $this->belongsToMany(Product::class, 'product_user')
+            ->withPivot('quantity')   
             ->withTimestamps();
     }
 }
