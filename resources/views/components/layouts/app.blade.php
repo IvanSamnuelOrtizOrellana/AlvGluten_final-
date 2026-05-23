@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>AlvGluten | El paraíso sin gluten</title>
+    <title>AlvGluten | Glutenfree-online-shop</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo_alvgluten.png') }}">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -43,6 +43,15 @@
                         </button>
                         <div id="dropdownUser" class="z-50 hidden bg-white divide-y divide-gray-100 rounded-xl shadow-lg w-44 border border-gray-100">
                             <ul class="py-2 text-sm text-gray-700">
+                                @can('es-admin') {{--El panel que unicamente aparece con el usiario admin--}}
+                                    <li>
+                                        <a href="{{ route('admin.productos.index') }}"
+                                           class="flex items-center gap-2 px-4 py-2 text-sm text-purple-700 hover:bg-purple-50 font-bold">
+                                            ⚙️ Panel Admin
+                                        </a>
+                                    </li>
+                                    <li><hr class="border-gray-100 my-1"></li>
+                                @endcan
                                 <li><a href="{{ route('dashboard') }}" class="block px-4 py-2 hover:bg-lime-50 hover:text-lime-600 font-medium">Mi Panel</a></li>
                             </ul>
                             <div class="py-2">
