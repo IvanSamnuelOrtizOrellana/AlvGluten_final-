@@ -9,18 +9,16 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Order;
 
 class ConfirmacionPedido extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+
+    //el contructor que recibe al orden y mailable serializa
+    public function __construct(public Order $order){}
+
 
     /**
      * Get the message envelope.
@@ -28,7 +26,7 @@ class ConfirmacionPedido extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Confirmacion Pedido',
+            subject: " ¡Tu pedido #{$this->order->id} está confirmado! — AlvGluten",
         );
     }
 
@@ -38,8 +36,12 @@ class ConfirmacionPedido extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
-        );
+            view: 'emails.confirmacion-pedido',
+            // Las variables que pasen al template automáticamente
+            with: [
+                'order'    => $this->order->load('items', 'user'),
+                'userName' => $this->order->user->name,
+        ]);
     }
 
     /**

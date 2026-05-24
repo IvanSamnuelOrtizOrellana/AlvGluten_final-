@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Livewire\Admin\ProductIndex;
 use App\Livewire\Admin\ProductCreate;
 use App\Livewire\Admin\ProductEdit;
+use App\Livewire\Checkout;
+use App\Livewire\MisPedidos;
 
 
 // Catálogo Perrón como página principal
@@ -50,5 +52,12 @@ Route::middleware(['auth', 'es-admin'])
         Route::get('/productos/crear',  ProductCreate::class)->name('productos.crear');
         Route::get('/productos/{product}/editar', ProductEdit::class)->name('productos.editar');
     });
+// checkout
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout', Checkout::class)->name('checkout');
+    Route::get('/checkout/exito', fn() => view('livewire.checkout-exito'))
+        ->name('checkout.exito');
+    Route::get('/mis-pedidos', MisPedidos::class)->name('mis-pedidos');
+});
 
 require __DIR__.'/auth.php';

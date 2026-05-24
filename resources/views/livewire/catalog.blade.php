@@ -39,8 +39,8 @@
             @foreach($products as $product)
                 <div class="w-full max-w-sm bg-white p-6 border border-gray-200 rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col group">
 
-                    <a href="#" class="block h-48 bg-lime-50 rounded-xl mb-6 flex items-center justify-center text-7xl group-hover:scale-105 transition-transform duration-300">
-                        🛍️
+                    <a>
+                        <img src="{{ Storage::url($product->image_path) }}" class="h-full w-full object-cover rounded-lg" alt="{{ $product->name }}">
                     </a>
 
                     <div class="flex-grow flex flex-col">

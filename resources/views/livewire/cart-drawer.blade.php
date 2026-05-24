@@ -65,7 +65,7 @@
                 <span class="font-bold text-gray-900">Total:</span>
                 <span class="font-black text-lime-600 text-xl">${{ number_format($total, 2) }}</span>
             </div>
-            <a href="#"
+            <a href="{{ route('checkout') }}"
                class="block text-center w-full text-white bg-lime-600 hover:bg-lime-700 font-bold rounded-xl text-sm px-4 py-3 shadow-md transition-colors">
                 Proceder al Pago →
             </a>

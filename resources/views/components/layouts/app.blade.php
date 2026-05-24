@@ -22,7 +22,7 @@
 
                 <div class="flex-shrink-0 flex items-center">
                     <a href="/" class="flex items-center gap-3 group">
-                        <img src="{{ asset('images/logo_alvgluten.png') }}" alt="Logo AlvGluten" class="h-24 w-auto max-w-[300px] sm:h-16 sm:max-w-[340px] object-contain transition-transform group-hover:scale-130">
+                        <img src="{{ asset('images/logo_alvgluten.png') }}" alt="Logo AlvGluten" class="h-24 w-auto max-w-[300px] sm:h-20 sm:max-w-[340px] object-contain transition-transform group-hover:scale-130">
 
                     </a>
                 </div>
@@ -53,6 +53,7 @@
                                     <li><hr class="border-gray-100 my-1"></li>
                                 @endcan
                                 <li><a href="{{ route('dashboard') }}" class="block px-4 py-2 hover:bg-lime-50 hover:text-lime-600 font-medium">Mi Panel</a></li>
+                                    <li><a href="{{ route('mis-pedidos') }}" class="block px-4 py-2 hover:bg-lime-50 hover:text-lime-600 font-medium">Mis pedidos</a></li>
                             </ul>
                             <div class="py-2">
                                 <button

@@ -10,7 +10,7 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsYo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     //una orden puede tener muchos productos
