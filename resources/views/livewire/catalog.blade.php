@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-lime-700">
-                <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full opacity-90 mix-blend-multiply" src="https://images.unsplash.com/photo-1606854428728-5fe3eea23475?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Supermercado sin gluten">
+                <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full opacity-90 mix-blend-multiply" src="images/alimentos_gluten_free_en_Chile.jpg" alt="Supermercado sin gluten">
             </div>
         </div>
 

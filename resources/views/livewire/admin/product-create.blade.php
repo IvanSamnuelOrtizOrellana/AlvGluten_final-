@@ -1,3 +1,101 @@
-<div>
-    {{-- If you look to others for fulfillment, you will never truly be fulfilled. --}}
+<div class="p-8 max-w-2xl">
+    <div class="flex items-center gap-3 mb-6">
+        <a href="{{ route('admin.productos.index') }}"
+           class="text-gray-400 hover:text-gray-700 transition-colors font-medium text-sm">
+            ← Volver al listado
+        </a>
+        <span class="text-gray-300">/</span>
+        <h1 class="text-2xl font-extrabold text-gray-900">Nuevo Producto</h1>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5">
+
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Nombre del producto</label>
+            <input wire:model="name" type="text"
+                   class="w-full border-gray-200 rounded-xl focus:border-lime-400 focus:ring-lime-400"
+                   placeholder="Ej: Pan integral sin gluten">
+            @error('name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Descripción</label>
+            <textarea wire:model="description" rows="3"
+                      class="w-full border-gray-200 rounded-xl focus:border-lime-400 focus:ring-lime-400"
+                      placeholder="Describe el producto, ingredientes, beneficios..."></textarea>
+            @error('description') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Precio (MXN)</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 text-sm pointer-events-none">$</span>
+                    <input wire:model="price" type="number" step="0.01" min="0"
+                           class="w-full pl-7 border-gray-200 rounded-xl focus:border-lime-400 focus:ring-lime-400"
+                           placeholder="0.00">
+                </div>
+                @error('price') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Categoría</label>
+                <select wire:model="category_id"
+                        class="w-full border-gray-200 rounded-xl focus:border-lime-400 focus:ring-lime-400">
+                    <option value="">Selecciona una categoría...</option>
+                    @foreach($categories as $cat)
+                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                    @endforeach
+                </select>
+                @error('category_id') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">
+                Imagen del producto
+                <span class="font-normal text-gray-400 text-xs">(JPG/PNG/WebP · máx. 2MB)</span>
+            </label>
+
+            @if($imagen)
+                <div class="mb-3 flex items-center gap-3">
+                    <img src="{{ $imagen->temporaryUrl() }}"
+                         class="h-24 w-24 object-cover rounded-xl border-2 border-lime-300">
+                    <div>
+                        <p class="text-xs text-lime-600 font-semibold">✓ Vista previa lista</p>
+                        <p class="text-xs text-gray-400 mt-0.5">La imagen se guardará al crear el producto</p>
+                    </div>
+                </div>
+            @endif
+
+            <input wire:model="imagen" type="file" accept="image/*"
+                   class="block w-full text-sm text-gray-500
+                          file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0
+                          file:bg-lime-50 file:text-lime-700 file:font-semibold
+                          hover:file:bg-lime-100 cursor-pointer">
+
+            <div wire:loading wire:target="imagen" class="mt-2 text-xs text-lime-600 font-medium">
+                ⏳ Cargando imagen...
+            </div>
+
+            @error('imagen') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div class="flex items-center gap-3 p-3 bg-lime-50 rounded-xl">
+            <input wire:model="is_gluten_free" id="is_gluten_free" type="checkbox"
+                   class="w-5 h-5 rounded text-lime-600 focus:ring-lime-500">
+            <label for="is_gluten_free" class="text-sm font-semibold text-gray-700 cursor-pointer">
+                🌾 Certificado Sin Gluten
+            </label>
+        </div>
+
+        <button wire:click="save"
+                wire:loading.attr="disabled"
+                wire:target="save"
+                class="w-full bg-lime-600 hover:bg-lime-700 disabled:opacity-60 text-white font-bold py-3 px-6 rounded-xl shadow transition-all active:scale-95">
+            <span wire:loading.remove wire:target="save">Guardar Producto</span>
+            <span wire:loading wire:target="save">⏳ Guardando...</span>
+        </button>
+
+    </div>
 </div>

@@ -46,9 +46,9 @@ Route::middleware(['auth', 'es-admin'])
             ->name('dashboard');
 
 
-        //Route::get('/productos',        ProductIndex::class)->name('productos.index');
-       // Route::get('/productos/crear',  ProductCreate::class)->name('productos.crear');
-        //Route::get('/productos/{product}/editar', ProductEdit::class)->name('productos.editar');
+        Route::get('/productos',        ProductIndex::class)->name('productos.index');
+        Route::get('/productos/crear',  ProductCreate::class)->name('productos.crear');
+        Route::get('/productos/{product}/editar', ProductEdit::class)->name('productos.editar');
     });
 
 require __DIR__.'/auth.php';

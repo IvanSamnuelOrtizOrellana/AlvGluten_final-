@@ -17,7 +17,7 @@ class EsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        //si no es usuario deniega acceso y redirige 
+        //si no es usuario deniega acceso y redirige
         if (Gate::denies('es-admin')){
             abort(403, 'Lo sentimos. No tiene permiso de acceder aquí.'); //redirige al usuario no autorizado y le lanza el error
         }

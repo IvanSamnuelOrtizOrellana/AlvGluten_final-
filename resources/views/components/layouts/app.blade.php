@@ -22,7 +22,7 @@
 
                 <div class="flex-shrink-0 flex items-center">
                     <a href="/" class="flex items-center gap-3 group">
-                        <img src="{{ asset('images/logo_alvgluten.png') }}" alt="Logo AlvGluten" class="h-24 w-auto max-w-[160px] sm:h-14 sm:max-w-[200px] object-contain transition-transform group-hover:scale-105">
+                        <img src="{{ asset('images/logo_alvgluten.png') }}" alt="Logo AlvGluten" class="h-24 w-auto max-w-[300px] sm:h-16 sm:max-w-[340px] object-contain transition-transform group-hover:scale-130">
 
                     </a>
                 </div>
@@ -47,7 +47,7 @@
                                     <li>
                                         <a href="{{ route('admin.productos.index') }}"
                                            class="flex items-center gap-2 px-4 py-2 text-sm text-purple-700 hover:bg-purple-50 font-bold">
-                                            ⚙️ Panel Admin
+                                             Panel Admin
                                         </a>
                                     </li>
                                     <li><hr class="border-gray-100 my-1"></li>
