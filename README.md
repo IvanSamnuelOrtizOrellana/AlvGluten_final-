@@ -8,12 +8,12 @@ Plataforma de comercio electrónico diseñada especialmente para la comunidad ce
 * **Base de Datos:** MySQL
 * **Entorno:** Docker (Contenedores)
 
-## ⚙ Requisitos Previos
+##  Requisitos Previos
 Para levantar este proyecto, necesitas tener instalado:
 * Docker y Docker Compose
 * Git
 
-## 🛠 Instalación y Configuración
+##  Instalación y Configuración
 
 1. **Clonar el repositorio:**
    `git clone https://github.com/IvanSamnuelOrtizOrellana/AlvGluten_final-.git`
