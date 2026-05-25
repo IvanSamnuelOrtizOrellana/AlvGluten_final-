@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,8 @@ class ProductFactory extends Factory
             'description' => fake()->paragraph(),
             'price' => fake()->randomFloat(2, 10, 500), // un numero random entre 10 y 500 para los precios con dos decimales,
             'is_gluten_free' =>true, //para que todos los digan que son gluten free
+            'image_path'    => null,
+            'category_id'   => Category::factory(),
         ];
     }
 }

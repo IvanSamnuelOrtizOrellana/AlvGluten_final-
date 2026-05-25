@@ -9,6 +9,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Auth\Access\AuthorizationException;
 
 #[Layout('components.layouts.admin')]
 class ProductCreate extends Component
@@ -35,6 +36,9 @@ class ProductCreate extends Component
 
     public function save(): void
     {
+        if (auth()->user()->rol !== 'admin') {
+            throw new AuthorizationException('No tienes permiso para crear productos.');
+        }
         Gate::authorize('es-admin');
         $this->validate();
 
